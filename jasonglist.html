@@ -25,8 +25,25 @@
      //    console.log(data);
      //   }
      // });
-     import json from 'songList.json';
-     console.log(json);
+     // let json = require('https://raw.githubusercontent.com/adamas-oui/COMP20-hw9/main/songList.json');
+     // console.log(json, 'title');
+     
+     $.get( "https://raw.githubusercontent.com/adamas-oui/COMP20-hw9/main/songList.json", 
+		  function( data ) {
+    			str = JSON.stringify(data);
+    			document.write(str +"<br/>");
+		  strHTML= "<ul>";
+	   	data.forEach(function(song) { 
+	  	strHTML += "<li>" 
+			        + song.title + " : " 
+				      + song.artist + "</li>"
+              + song.genre + "</li>"
+              + song.releaseYear + "</li>";
+
+			       }) 
+	    strHTML += "</ul>";
+    	document.write (strHTML);  
+    	})
     </script>   
     <p>PICK A GENRE</p>
   </body>
