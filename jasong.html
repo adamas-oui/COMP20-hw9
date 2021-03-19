@@ -1,0 +1,88 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Jasong</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script language="javascript">
+
+	var file;
+	//click and display
+	window.onload = function(){
+		
+		$.get( "https://raw.githubusercontent.com/adamas-oui/COMP20-hw9/main/songList.json", 
+			function( data ) {
+			var data = JSON.parse(data);
+			file = data;
+			
+			//display as raw string
+			str = JSON.stringify(data);
+			document.getElementById("str").innerHTML = str;
+			
+			//display as viewer friendly
+			strHTML= "<ul>";
+			title_list = [];
+			genre_list = [];
+			data.forEach(function(song) {
+	
+			strHTML += "<li>" 
+						+ song.title + "</br>"
+					+ "ARTIST: " + song.artist + "</br>"
+					+ " GENRE: " + song.genre + "</br>"
+					+ " RELEASED IN: " + song.releaseYear + "</li>";
+				}) 
+			strHTML += "</ul>";
+			// alert(title_list);
+			document.getElementById("display").innerHTML = strHTML;
+		})
+	
+		b = document.getElementById("btn");
+		b.onclick = function(){
+			var e = document.getElementById("dropdown");
+			var eVal = e.value;
+			// alert(eVal);
+			song_names = [];
+			file.forEach(function(song) {
+				if(song.genre.includes(eVal)){
+					song_names = song_names + song.title + ". ";
+				}
+				}) 
+
+		document.getElementById("result").innerHTML = song_names;
+	  }
+
+	}
+
+</script> 
+</head> 
+
+
+<body> 
+
+<div id="str"></div>
+<div id="display"></div>
+<form id="form" action="index.html" method="post">
+	<select id="dropdown" name="genres">
+		<option value="Pop">Pop</option>
+		<option value="English">English</option>
+		<option value="French">French</option>
+		<option value="English">English</option>
+		<option value="Soul">Soul</option>
+		<option value="R&B">R&B</option>
+		<option value="Classical">Classical</option>
+		<option value="Piano">Piano</option>
+		<option value="Dance">Dance</option>
+		<option value="Remake">Remake</option>
+		<option value="Soundtrack">Soundtrack</option>
+		<option value="Chamber Pop">Chamber Pop</option>
+	</select>
+	<input type="button" id="btn" value="Filter">
+	<div id="result"></div>
+</form>
+
+	
+
+</body>
+</html>
